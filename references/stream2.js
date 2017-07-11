@@ -1,4 +1,4 @@
-lazy = require('./lazy.js')
+const lazy = require('./lazy.js').Lazy
 
 /**
  * The main constructor for Streams, but the preferred interface is through the 
