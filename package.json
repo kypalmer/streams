@@ -1,6 +1,10 @@
 {
     "scripts": {
         "build": "tsc -p ./",
-        "test": "tsc -p ./ & node lazy_test.js & node stream_test.js"
+        "pretest": "tsc -p ./",
+        "test": "concurrently \"node lazy_test.js\"  \"node stream_test.js\""
+    },
+    "dependencies": {
+        "concurrently": "^3.5.0"
     }
 }

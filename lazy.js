@@ -1,23 +1,26 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 /**
- * @param {() => A} val 
- * @returns {Lazy} 
- * 
+ * @param {() => A} val
+ * @returns {Lazy}
+ *
  * A lazy evaluation scheme for thunks
  * TODO: Not RT. Alter so that it doesn't use local state
  */
-function Lazy (val) {
-    this.cacheable = val;
-    this.cached_val = undefined;
-}
-
-function force () {
-    if (this.cached_val) {
-        return this.cached_val;
-    } else {
-        this.cached_val = this.cacheable();
-        return this.cached_val;
+var Lazy = (function () {
+    function Lazy(val) {
+        this.cacheable = val;
+        this.cached_val = undefined;
     }
-}
-Lazy.prototype.force = force;
-
-module.exports = Lazy;
+    Lazy.prototype.force = function () {
+        if (this.cached_val) {
+            return this.cached_val;
+        }
+        else {
+            this.cached_val = this.cacheable();
+            return this.cached_val;
+        }
+    };
+    return Lazy;
+}());
+exports.Lazy = Lazy;

@@ -30,17 +30,22 @@ export class Stream <A> {
      * @returns {Stream<A>}
      */
     static cons <A> (hd: (() => A), tl: (() => Stream<A>)): Stream<A> {
-        let head = new lazy(hd);
-        let tail = new lazy(tl);
+        // Due to binding patterns in JavaScript, binding 'force' would bind to the 'Stream' instead of the 
+        // 'Lazy' object we just created. we have to bind the correct 'this' to force at the moment we bind 
+        // the method.
+        let h = new lazy(hd);
+        let head = h.force.bind(h);
+        let t = new lazy(tl);
+        let tail = t.force.bind(t);
 
-        return new Stream( () => head, () => tail);
+        return new Stream<A>( head, tail);
     }
     /**
      * Return the head of the stream without error checking
      * @return {A}
      */
     head() {
-        return this.h().force();
+        return this.h();
     }
 
     /**
@@ -48,7 +53,7 @@ export class Stream <A> {
      * @return {Stream<A>}
      */
     tail() {
-        return this.t().force();
+        return this.t();
     }
 
     static empty() {
@@ -68,24 +73,7 @@ export class Stream <A> {
         }
     }
 
-    static ones() {
+    static ones(): Stream<number>{
         return Stream.cons(() => 1, Stream.ones);
     }
 }
-
-
-
-
-
-
-
-
-/**
- * @callback head~thunk
- * @returns {A}
- */
-
-/**
- * @callback tail~thunk
- * @returns {Stream<A>}
- */

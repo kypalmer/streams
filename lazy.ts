@@ -10,12 +10,13 @@ export class Lazy<A>{
     cacheable: () => A;
     cached_val: A | undefined;
 
+
     constructor(val: () => A) {
         this.cacheable = val;
         this.cached_val = undefined;
     }
 
-    force () {
+    force (): A {
         if (this.cached_val) {
             return this.cached_val;
         } else {
