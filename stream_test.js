@@ -30,14 +30,6 @@ r4 = a.tail().tail().tail() === undefined;
 result = r1&r2&r3&r4;
 log_test(description, result);
 
-description = "Head is uncached before head(): ";
-a = Stream.fromArray("a","b","c");
-b = a.h().cached_val;
-c = typeof a.h().cacheable;
-result = c === 'function' & b === undefined;
-log_test(description, result);
-
-
 finish_testing(results_array);
 
 function finish_testing(res_array) {
