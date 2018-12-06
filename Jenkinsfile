@@ -4,6 +4,7 @@ pipeline {
     stage('build') {
       steps {
         slackSend(message: 'hey', channel: 'backend_builds')
+        error 'broke the build!'
       }
     }
   }
